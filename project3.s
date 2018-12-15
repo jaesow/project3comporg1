@@ -102,6 +102,14 @@ reviewString:
 	bne $t6, $zero,  moveCharForward
 	bgt $t5, 118, err_invalid_input   # conditional: input > ascii(118) aka v is input invalid
  
+ #Spacing:
+            		#lb $t0, 0($t2) #load address in $t2 to $t0
+            		#addi $t2, $t2, 1 #increment pointer
+            		#addi $t1, $t1, 1 #increment counter
+            		#beq $t0, 32, spcaing #jump to spacing
+            		#beq $t0, 10, err_empty_input 
+            		#beq $t0, $0, err_empty_input 
+			#j check_str
  moveCharForward: 
  	  addi $a0, $a0, 1
  	  j reviewString # jump tp reviewString function 
