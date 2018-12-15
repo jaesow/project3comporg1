@@ -52,33 +52,38 @@ main:
     la $a0, inputFromUser  # load adress is taking the adress of inputFromUser and loading it into $a0
     li $a1, 100
     syscall
-delete_FirstCharacter:
- 	  addi $a0, $a0, 1 # adds 1 to register $a0
- 	  j delete_LeftPadding # calls delete left paddding function 
+    
 delete_LeftPadding:
- 	  li $t8, 32
- 	  lb $t9, 0($a0)
- 	  beq $t8, $t9, delete_FirstCharacter
- 	  move $t9, $a0
- 	  j inputLength # jump to and run to inputLength function 
-  inputLength:
-    addi $t0, $t0, 0 #  empty temp register $t0 makes emoty / gives null value
- 	  addi $t1, $t1, 10
- 	  add $t4, $t4, $a0
-  iterateThroughLength:
-    beqz $t2, foundLength
-    beq $t2, $t1, foundLength
- 	  addi $a0, $a0, 1
- 	  addi $t0, $t0, 1
- 	  j iterateThroughLength # jump to interate through the length funtion
-  
-  #after found length 
-  foundLength:
- 	  beqz $t0, input_IsEmpty #compares
-    slti $t3, $t0, 5
- 	  beqz $t3, input_IsEmpty
- 	  move $a0, $t4
- 	  j reviewString # jump
+	li $t8, 32 # space
+	lb $t9, 0($a0)
+	beq $t8, $t9, delete_FirstCharacter
+	move $t9, $a0
+	j inputLength
+
+delete_FirstCharacter:
+	addi $a0, $a0, 1
+	j delete_LeftPadding
+
+inputLength:
+	addi $t0, $t0, 0
+	addi $t1, $t1, 10
+	add $t4, $t4, $a0
+
+iterateThroughLength:
+	lb $t2, 0($a0) # loads a sign-extended version of the byte into a 32-bit value. I.e. the most significant bit (msb) is copied into the upper 24 bits.
+	beqz $t2, after_length_is_found
+	beq $t2, $t1, after_length_is_found
+	addi $a0, $a0, 1
+	addi $t0, $t0, 1
+	j iterateThroughLength
+
+after_length_is_found:
+	beqz $t0, input_IsEmpty
+	slti $t3, $t0, 5
+	beqz $t3, input_IsLong
+	move $a0, $t4
+	j reviewString
+	
   reviewString:
  	  lb $t5, 0($a0)
     beq $t5, $t1, prepForConvo # compares if equal 
