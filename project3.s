@@ -22,9 +22,9 @@ input_FromUser:
    		# Move the result to $t0
     		#move $t0, $v0
    	
-    		Display
-    		li $v0, 4 # prints string to the screen
-    		la $a0, newline
+    		#Display
+    		#li $v0, 4 # prints string to the screen
+    		#la $a0, newline
     		#la $a0,($t0)# load the address of $v0 into $a0, which will now hold the user input
     		
     		la $a0,($v0) #load the address of $t0 into $a0, which will now hold the user input
