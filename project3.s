@@ -81,10 +81,10 @@ after_length_is_found:
 	beqz $t3, input_IsLong
 	move $a0, $t4
 	j reviewString
-reviewString:
+reviewString: #function compares to check if string input from user is valid and within the restrictions
 	lb $t5, 0($a0)
-	beqz $t5, prepare_for_conversion
-	beq $t5, $t1, prepare_for_conversion
+	beqz $t5, preConversion
+	beq $t5, $t1, preConversion
 	slti $t6, $t5, 48                 #  condtional: input < ascii(48) aka 0 input is invalid
 	bne $t6, $zero, input_IsInvalid
 	slti $t6, $t5, 58                 # conditional: input  < ascii(58) aka 9,  input is valid,( 0 - 9 restriction) 
@@ -110,7 +110,7 @@ reviewString:
  	  addi $a0, $a0, 1
  	  j reviewString # jump tp reviewString function 
  # function thats prepares for conversion 
- PreConversion:
+ preConversion:
  	  move $a0, $t4
  	  addi $t7, $t7, 0
  	  add $s0, $s0, $t0
