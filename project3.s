@@ -83,27 +83,30 @@ after_length_is_found:
 	beqz $t3, input_IsLong
 	move $a0, $t4
 	j reviewString
-	
-  reviewString:
- 	  lb $t5, 0($a0)
-    beq $t5, $t1, prepForConvo # compares if equal 
- 	  slti $t6, $t5, 48
- 	  bne $t6, $zero, input_IsInvalid
-    slti $t6, $t5, 58
- 	  bne $t6, $zero, moveCharForward
- 	  slti $t6, $t5, 65
- 	  bne $t6, $zero, input_IsInvalid
- 	  slti $t6, $t5, 86                 
- 	  bne $t6, $zero, moveCharForward
- 	  slti $t6, $t5, 97
- 	  bne $t6, $zero, input_IsInvalid	
- 	  slti $t6, $t5, 118 
- 	  bne $t6, $zero, moveCharForward
- 	  bgt $t5, 119, input_IsInvalid   
- moveCharForward:
+
+reviewString:
+	lb $t5, 0($a0)
+	beqz $t5, prepare_for_conversion
+	beq $t5, $t1, prepare_for_conversion
+	slti $t6, $t5, 48                 #  condtional: input < ascii(48) aka 0 input is invalid
+	bne $t6, $zero, err_invalid_input
+	slti $t6, $t5, 58                 # conditional: input  < ascii(58) aka 9,  input is valid,( 0 - 9 restriction) 
+	bne $t6, $zero, step_char_forward
+	slti $t6, $t5, 65                 # conditional: input < ascii(65) aka A,  input is invalid 
+	bne $t6, $zero, err_invalid_input
+	slti $t6, $t5, 85                 # conditional: input < ascii(85) aka U input is valid
+	bne $t6, $zero, step_char_forward
+	slti $t6, $t5, 97                 # conditional: input < ascii(97) aka a input invalid
+	bne $t6, $zero, err_invalid_input
+	slti $t6, $t5, 117               # conditional: input < ascii(117) aka u input is valid
+	bne $t6, $zero, step_char_forward
+	bgt $t5, 118, err_invalid_input   # conditional: input > ascii(118) aka v is input invalid
+ 
+ moveCharForward: 
  	  addi $a0, $a0, 1
  	  j reviewString # jump tp reviewString function 
  # function thats prepares for conversion 
+ 
  prepForConvo:
  	  move $a0, $t4
  	  addi $t7, $t7, 0
