@@ -9,7 +9,7 @@
 	 inputFromUser: .asciiz  "Enter string up to 4 characters: "
  
 .text
-input_FromUser:
+	input_FromUser:
 		
 		li $v0, 4
 		la $a0, inputFromUser #takes the value of users input puts into register a0
@@ -22,34 +22,35 @@ input_FromUser:
    		# Move the result to $t0
     		#move $t0, $v0
    	
-    		#Display
+    		# Display
     		#li $v0, 4 # prints string to the screen
     		#la $a0, newline
     		#la $a0,($t0)# load the address of $v0 into $a0, which will now hold the user input
     		
     		la $a0,($v0) #load the address of $t0 into $a0, which will now hold the user input
-      		syscall
-      
-input_IsLong: 
- 		la $a0, inputIsLong
- 		li $v0, 4
- 		syscall
- 		j exit
-input_IsEmpty:
- 		la $a0, inputIsEmpty
- 		li $v0, 4
- 		syscall
- 		j exit
-input_IsInvalid:
- 		la $a0, inputIsInvalid
- 		li $v0, 4
- 		syscall
- 		j exit
+    		syscall 
+    			
+	input_IsEmpty:
+  		la $a0, inputIsEmpty
+  		li $v0, 4
+  		syscall
+  		j exit
 
+	input_IsInvalid:
+		la $a0, inputIsInvalid
+		li $v0, 4
+		syscall
+		j exit
+
+	input_IsLong:
+		la $a0, inputIsLong
+		li $v0, 4
+		syscall
+		j exit
 main: 
     li $v0, 8
-    la $a0, inputFromUser
-    li $a1, 250
+    la $a0, inputFromUser  # load adress is taking the adress of inputFromUser and loading it into $a0
+    li $a1, 100
     syscall
 delete_FirstCharacter:
  	  addi $a0, $a0, 1 # adds 1 to register $a0
