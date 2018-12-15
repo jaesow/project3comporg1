@@ -1,5 +1,18 @@
 # need to go retireve the last commit from project2.s
 #x = id number 02865424 so N = 27 + (02865424 % 10) N = 27 + 4 N = 31
+#CHECK IF USER INPUT IS VALID
+#PASS VALID INPUT ONTO A STACK 
+	#Take the value of user input from $a0 
+	#Store $a0 into memory or a stack 
+#PASS STACK TO THE SUBPROGRAM 
+#SUBPROGRAM CONVERTS NUMBER TO BASE N NUMBER 
+	#Call the conversion functions 
+		#save the result on stack 
+	#Or outside of the function: save the result on stack
+#PUT BASE N NUMBER ONTO STACK 
+#Main retrieves the stack  - jr $ra command 
+#PRINT STACK OUT TO USER 
+
 .data
   #newline:	.asciiz "\n"
 	 inputIsEmpty:   .asciiz "Input is empty."
@@ -115,7 +128,7 @@ reviewString:
  	  j reviewString # jump tp reviewString function 
  # function thats prepares for conversion 
  
- prepForConvo:
+ PreConversion:
  	  move $a0, $t4
  	  addi $t7, $t7, 0
  	  add $s0, $s0, $t0
@@ -124,24 +137,30 @@ reviewString:
  	  li $s2, 2
  	  li $s1, 1
  	  li $s5, 0
+
+#addi $sp, $sp, -4 #alocating space of 4 bytes into the stack pointer
+		#sw $a0, 0($sp) # stores the value of $s0 into the first spot in the stack
+		#jal conversion_subprogram
+		
  convertInput:
  	  lb $s4, 0($a0)
  	  beqz $s4, print
-  	beq $s4, $t1, print # compares the registries
+	  beq $s4, $t1, print # compares the registries
  	  slti $t6, $s4, 58
- 	bne $t6, $zero, baseTen
+	  bne $t6, $zero, baseTen
  	  slti $t6, $s4, 88
- 	  bne $t6, $zero,upperBase33
+ 	  bne $t6, $zero,upperBase31
  	  slti $t6, $s4, 120
- 	  bne $t6, $zero, lowerBase33
+ 	  bne $t6, $zero, lowerBase31
  baseTen:
  	  addi $s4, $s4, -48
  	  j serialize #  jump to serlialze function 
+	  
  #calculates conversions 
- upperBase33:
+ upperBase31:
  	  addi $s4, $s4, -55
   	j serialize
- lowerBase33:
+ lowerBase31:
  	  addi $s4, $s4, -87
  serialize:
     beq $s0, $s3, digitOne
@@ -184,4 +203,23 @@ reviewString:
 	exit:
 		li $v0, 10
 		syscall
+	#conversion_subprogram: 
+	
+	 
+	 	# conversion needs to go here 
+	 	
+	 	
+	 	
+		#prints 
+		#li $v0, 1
+		#move $a0, $s0
+		#syscall
+	
+		#lw $s0, 0($sp) #gets the users input value from main
+		#addi $sp, $sp, 4 #points to the space in the stack
+	
+		#jr $ra
+	
  j exit
+ 
+ 
