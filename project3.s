@@ -91,15 +91,15 @@ reviewString:
 	slti $t6, $t5, 48                 #  condtional: input < ascii(48) aka 0 input is invalid
 	bne $t6, $zero, err_invalid_input
 	slti $t6, $t5, 58                 # conditional: input  < ascii(58) aka 9,  input is valid,( 0 - 9 restriction) 
-	bne $t6, $zero, step_char_forward
+	bne $t6, $zero,  moveCharForward
 	slti $t6, $t5, 65                 # conditional: input < ascii(65) aka A,  input is invalid 
 	bne $t6, $zero, err_invalid_input
 	slti $t6, $t5, 85                 # conditional: input < ascii(85) aka U input is valid
-	bne $t6, $zero, step_char_forward
+	bne $t6, $zero,  moveCharForward
 	slti $t6, $t5, 97                 # conditional: input < ascii(97) aka a input invalid
 	bne $t6, $zero, err_invalid_input
 	slti $t6, $t5, 117               # conditional: input < ascii(117) aka u input is valid
-	bne $t6, $zero, step_char_forward
+	bne $t6, $zero,  moveCharForward
 	bgt $t5, 118, err_invalid_input   # conditional: input > ascii(118) aka v is input invalid
  
  moveCharForward: 
