@@ -20,15 +20,15 @@ input_FromUser:
    		syscall
    		
    		# Move the result to $t0
-    		move $t0, $v0
+    		#move $t0, $v0
    	
-    		# Display
+    		Display
     		li $v0, 4 # prints string to the screen
     		la $a0, newline
-    		la $a0,($t0)# load the address of $v0 into $a0, which will now hold the user input
+    		#la $a0,($t0)# load the address of $v0 into $a0, which will now hold the user input
     		
-    		#la $a0,($v0) #load the address of $t0 into $a0, which will now hold the user input
-      syscall
+    		la $a0,($v0) #load the address of $t0 into $a0, which will now hold the user input
+      		syscall
       
 input_IsLong: 
  		la $a0, inputIsLong
