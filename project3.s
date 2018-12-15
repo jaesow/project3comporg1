@@ -1,11 +1,35 @@
 # need to go retireve the last commit from project2.s
 #x = id number 02865424 so N = 27 + (02865424 % 10) N = 27 + 4 N = 31
- .data
-  inputIsLong:    .asciiz "Input is too long."
-  inputIsEmpty:   .asciiz "Input is empty"
-  inputFromUser:  .space 500
-  inputIsInvalid: .asciiz "Invalid base-N number." #if N i soutside of the parameters 0-9 etc. 
+.data
+  #newline:	.asciiz "\n"
+	 inputIsEmpty:   .asciiz "Input is empty."
+	 inputIsInvalid: .asciiz "Invalid base-31 number."
+	 inputIsLong:    .asciiz "Input is too long."
+	 inputFromUserSpace:    .space  512
+	 inputFromUser: .asciiz  "Enter string up to 4 characters: "
+ 
 .text
+input_FromUser:
+		
+		li $v0, 4
+		la $a0, inputFromUser #takes the value of users input puts into register a0
+		syscall
+		
+		# Get the user's input
+    		li $v0, 8
+   		syscall
+   		
+   		# Move the result to $t0
+    		move $t0, $v0
+   	
+    		# Display
+    		li $v0, 4 # prints string to the screen
+    		la $a0, newline
+    		la $a0,($t0)# load the address of $v0 into $a0, which will now hold the user input
+    		
+    		#la $a0,($v0) #load the address of $t0 into $a0, which will now hold the user input
+      syscall
+      
 input_IsLong: 
  		la $a0, inputIsLong
  		li $v0, 4
