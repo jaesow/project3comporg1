@@ -45,9 +45,7 @@ input_IsInvalid:
  		li $v0, 4
  		syscall
  		j exit
-exit:
- 		li $v0, 10
- 		syscall
+
 main: 
     li $v0, 8
     la $a0, inputFromUser
@@ -162,8 +160,11 @@ delete_LeftPadding:
  	  mult $s4, $s6
  	  mflo $s7
  	  add $t7, $t7, $s7
- print:
- 	  li $v0, 1
- 	  move $a0, $t7
- 	  syscall
+	print:
+		li $v0, 1
+		move $a0, $t7
+		syscall
+	exit:
+		li $v0, 10
+		syscall
  j exit
